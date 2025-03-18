@@ -3,13 +3,11 @@ import 'package:yd8/core/usecase.dart';
 import 'package:yd8/modules/emp_manager/domain/emp_repo.dart';
 import 'package:yd8/modules/emp_manager/domain/entities.dart';
 
-class GetEmpsUsecase implements Usecase<DataState<List<Employee>>, void> {
+class GetEmpsUsecase implements Usecase<Result<List<Emp>>, void> {
   final EmpRepo empRepo;
 
-  const GetEmpsUsecase(this.empRepo);
+  GetEmpsUsecase(this.empRepo);
 
   @override
-  Future<DataState<List<Employee>>> call(void params) {
-    throw UnimplementedError();
-  }
+  Future<Result<List<Emp>>> call(void params) => empRepo.getEmps();
 }

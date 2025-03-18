@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:yd8/core/ui/navigation.dart';
+import 'package:yd8/core/navigation/nav.dart';
 
 class SettingsPage extends StatelessWidget {
   const SettingsPage({super.key});
@@ -7,6 +7,7 @@ class SettingsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AppScaffold(
+      title: "Settings",
       body: Builder(builder: (context) => Placeholder()),
       currentRoute: '/settings',
     );

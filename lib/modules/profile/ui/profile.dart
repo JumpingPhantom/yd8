@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:yd8/core/ui/navigation.dart';
+import 'package:yd8/core/navigation/nav.dart';
 
 class ProfilePage extends StatelessWidget {
   const ProfilePage({super.key});
@@ -7,6 +7,7 @@ class ProfilePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AppScaffold(
+      title: "Profile",
       body: Builder(builder: (context) => Placeholder()),
       currentRoute: '/profile',
     );

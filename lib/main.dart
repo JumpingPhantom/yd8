@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:yd8/modules/dashboard/ui/dashboard.dart';
 import 'package:yd8/modules/emp_manager/di/emp_manager_di.dart';
 import 'package:yd8/modules/emp_manager/ui/emp_manager.dart';
-import 'package:yd8/modules/profile/profile.dart';
-import 'package:yd8/modules/reports/reports.dart';
+import 'package:yd8/modules/profile/ui/profile.dart';
+import 'package:yd8/modules/reports/ui/reports.dart';
 import 'package:yd8/modules/settings/ui/settings.dart';
-import 'package:yd8/modules/stats/stats.dart';
+import 'package:yd8/modules/stats/ui/stats.dart';
 
-void main() {
+Future<void> main() async {
   initEmpManagerDependencies();
   runApp(const MyApp());
 }

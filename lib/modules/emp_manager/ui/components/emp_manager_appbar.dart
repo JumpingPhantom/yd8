@@ -4,11 +4,7 @@ class EmpManagerAppBar extends StatefulWidget implements PreferredSizeWidget {
   final String title;
   final Function(String)? onSearch;
 
-  const EmpManagerAppBar({
-    super.key,
-    this.title = "Employee Manager",
-    this.onSearch,
-  });
+  const EmpManagerAppBar({super.key, this.title = "Search", this.onSearch});
 
   @override
   State<EmpManagerAppBar> createState() => _EmpManagerAppBarState();
@@ -35,7 +31,6 @@ class _EmpManagerAppBarState extends State<EmpManagerAppBar> {
               ? TextField(
                 controller: _searchController,
                 decoration: InputDecoration(
-                  hintText: "Search...",
                   border: InputBorder.none,
                   hintStyle: TextStyle(color: Colors.white70),
                 ),
@@ -48,7 +43,6 @@ class _EmpManagerAppBarState extends State<EmpManagerAppBar> {
               )
               : Text(widget.title),
       actions: [
-        // Search button
         IconButton(
           icon: Icon(_showSearchBar ? Icons.close : Icons.search),
           onPressed: () {

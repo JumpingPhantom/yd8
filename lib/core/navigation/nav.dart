@@ -12,7 +12,6 @@ class NavigationItem {
   });
 }
 
-// Sidebar Navigation Widget
 class SidebarNavigation extends StatelessWidget {
   final int selectedIndex;
   final Function(int) onItemSelected;
@@ -58,7 +57,7 @@ class SidebarNavigation extends StatelessWidget {
               },
             ),
           ),
-          // You can add a footer here
+
           const SizedBox(height: 20),
         ],
       ),
@@ -76,7 +75,7 @@ class SidebarNavigation extends StatelessWidget {
         color:
             isSelected
                 ? (selectedItemColor ?? Theme.of(context).colorScheme.primary)
-                    .withValues(alpha: 0.6)
+                    .withValues(alpha: 0.1)
                 : Colors.transparent,
       ),
       child: InkWell(
@@ -120,14 +119,15 @@ class SidebarNavigation extends StatelessWidget {
   }
 }
 
-// Root Layout that combines Sidebar and Content
 class AppScaffold extends StatefulWidget {
   final Widget body;
+  final String title;
   final String currentRoute;
 
   const AppScaffold({
     super.key,
     required this.body,
+    required this.title,
     required this.currentRoute,
   });
 
@@ -136,17 +136,20 @@ class AppScaffold extends StatefulWidget {
 }
 
 class _AppScaffoldState extends State<AppScaffold> {
-  // Define navigation items
   final List<NavigationItem> _navItems = [
-    NavigationItem(title: 'Dashboard', icon: Icons.home, route: '/'),
+    NavigationItem(title: 'Dashboard', icon: Icons.dashboard, route: '/'),
     NavigationItem(
-      title: 'Employees',
+      title: 'Employee Manager',
       icon: Icons.people,
       route: '/emp_manager',
     ),
     NavigationItem(title: 'Profile', icon: Icons.person, route: '/profile'),
-    NavigationItem(title: 'Reports', icon: Icons.report, route: '/reports'),
-    NavigationItem(title: 'Stats', icon: Icons.bar_chart, route: '/stats'),
+    NavigationItem(
+      title: 'Reports',
+      icon: Icons.description,
+      route: '/reports',
+    ),
+    NavigationItem(title: 'Statistics', icon: Icons.bar_chart, route: '/stats'),
     NavigationItem(title: 'Settings', icon: Icons.settings, route: '/settings'),
   ];
 
@@ -169,23 +172,22 @@ class _AppScaffoldState extends State<AppScaffold> {
 
     return Scaffold(
       appBar: AppBar(
+        title: Text(widget.title),
         elevation: 0,
-        // This will show a hamburger icon on mobile to open drawer
         leading: Builder(
-          builder:
-              (context) =>
-                  MediaQuery.of(context).size.width < 600
-                      ? IconButton(
-                        icon: const Icon(Icons.menu),
-                        onPressed: () {
-                          Scaffold.of(context).openDrawer();
-                        },
-                      )
-                      : SizedBox.shrink(),
+          builder: (context) {
+            return MediaQuery.of(context).size.width < 600
+                ? IconButton(
+                  icon: const Icon(Icons.menu),
+                  onPressed: () {
+                    Scaffold.of(context).openDrawer();
+                  },
+                )
+                : SizedBox.shrink();
+          },
         ),
       ),
 
-      // Responsive layout - use drawer for mobile
       drawer:
           MediaQuery.of(context).size.width < 600
               ? Drawer(
@@ -201,14 +203,13 @@ class _AppScaffoldState extends State<AppScaffold> {
               : null,
       body: Row(
         children: [
-          // Show sidebar only on desktop/tablet
           if (MediaQuery.of(context).size.width >= 600)
             SidebarNavigation(
               selectedIndex: selectedIndex,
               onItemSelected: (index) => _onItemSelected(index, context),
               items: _navItems,
             ),
-          // Content
+
           Expanded(
             child: Container(
               color: Theme.of(context).colorScheme.surface,
