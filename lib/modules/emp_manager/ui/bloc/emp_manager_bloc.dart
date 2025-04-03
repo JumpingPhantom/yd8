@@ -1,9 +1,10 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:yd8/core/data_state.dart';
+import 'package:yd8/core/util/data_state.dart';
 import 'package:yd8/modules/emp_manager/domain/add_emp_usecase.dart';
 import 'package:yd8/modules/emp_manager/domain/entities.dart';
 import 'package:yd8/modules/emp_manager/domain/get_emps_usecase.dart';
+import 'package:yd8/modules/emp_manager/domain/rem_emp_usecase.dart';
 
 // events
 abstract class EmpManagerEvent extends Equatable {
@@ -21,7 +22,11 @@ class AddEmp extends EmpManagerEvent {
   const AddEmp({required this.emp});
 }
 
-class RemoveEmp extends EmpManagerEvent {}
+class RemEmp extends EmpManagerEvent {
+  final String id;
+
+  const RemEmp({required this.id});
+}
 
 class EditEmp extends EmpManagerEvent {}
 
@@ -58,15 +63,19 @@ class EmpManagerError extends EmpManagerState {
 class EmpManagerBloc extends Bloc<EmpManagerEvent, EmpManagerState> {
   final GetEmpsUsecase _getEmployeesUsecase;
   final AddEmpUsecase _addEmpUsecase;
+  final RemEmpUsecase _remEmpUsecase;
 
   EmpManagerBloc({
     required GetEmpsUsecase getEmployeesUsecase,
     required AddEmpUsecase addEmpUsecase,
+    required RemEmpUsecase remEmpUsecase,
   }) : _getEmployeesUsecase = getEmployeesUsecase,
        _addEmpUsecase = addEmpUsecase,
+       _remEmpUsecase = remEmpUsecase,
        super(EmpManagerInitial()) {
     on<GetEmps>(onFetchEmps);
     on<AddEmp>(onAddEmp);
+    on<RemEmp>(onRemEmp);
   }
 
   Future<void> onFetchEmps(GetEmps event, Emitter<EmpManagerState> emit) async {
@@ -88,7 +97,17 @@ class EmpManagerBloc extends Bloc<EmpManagerEvent, EmpManagerState> {
     if (dataState is Ok) {
       await onFetchEmps(GetEmps(), emit);
     } else {
-      emit(EmpManagerError("[ERROR] : Error adding new employee"));
+      emit(EmpManagerError('[ERROR] : Error adding new employee'));
+    }
+  }
+
+  Future<void> onRemEmp(RemEmp event, Emitter<EmpManagerState> emit) async {
+    final dataState = await _remEmpUsecase(event.id);
+
+    if (dataState is Ok) {
+      await onFetchEmps(GetEmps(), emit);
+    } else {
+      emit(EmpManagerError('[ERROR] : Error removing employee'));
     }
   }
 }

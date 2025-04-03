@@ -1,0 +1,33 @@
+{
+  "@_NAVIGATION_MENU": {},
+  "dashboard": "لوحة التحكم",
+  "emp_manager": "ادارة الموظفين",
+  "profile": "الملف الشخصي",
+  "reports": "التقارير",
+  "statistics": "احصائات",
+  "settings": "الاعدادات",
+
+  "@_EMPLOYEE_MANAGER": {},
+  "search": "ابحث",
+  "empty": "فاضي",
+  "new_emp": "موظف جديد",
+
+  "@_EMPLOYEE_MANAGER_FORM": {},
+  "personal_info": "معلومات شخصية",
+  "first_name": "الاسم الأول",
+  "middle_name": "الاسم الأوسط",
+  "last_name": "اسم العائلة",
+  "contact_info": "معلومات الاتصال",
+  "email": "البريد الإلكتروني",
+  "invalid_email": "عنوان بريد إلكتروني غير صالح، يرجى إدخال عنوان بريد إلكتروني صالح.",
+  "phone": "الهاتف",
+  "address1": "العنوان 1",
+  "address2": "العنوان 2",
+  "employment_info": "معلومات التوظيف",
+  "department": "القسم",
+  "role": "الدور",
+  "salary": "الراتب",
+  "hiring_date": "تاريخ التوظيف",
+  "additional_info": "معلومات إضافية",
+  "submit": "إرسال"
+}

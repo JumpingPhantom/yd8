@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class NavigationItem {
   final String title;
@@ -34,9 +35,9 @@ class SidebarNavigation extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       width: width,
-      color: backgroundColor ?? Theme.of(context).colorScheme.surface,
+      // color: backgroundColor ?? Theme.of(context).colorScheme.surface,
       child: Column(
         children: [
           const SizedBox(height: 20),
@@ -136,22 +137,7 @@ class AppScaffold extends StatefulWidget {
 }
 
 class _AppScaffoldState extends State<AppScaffold> {
-  final List<NavigationItem> _navItems = [
-    NavigationItem(title: 'Dashboard', icon: Icons.dashboard, route: '/'),
-    NavigationItem(
-      title: 'Employee Manager',
-      icon: Icons.people,
-      route: '/emp_manager',
-    ),
-    NavigationItem(title: 'Profile', icon: Icons.person, route: '/profile'),
-    NavigationItem(
-      title: 'Reports',
-      icon: Icons.description,
-      route: '/reports',
-    ),
-    NavigationItem(title: 'Statistics', icon: Icons.bar_chart, route: '/stats'),
-    NavigationItem(title: 'Settings', icon: Icons.settings, route: '/settings'),
-  ];
+  List<NavigationItem> _navItems = [];
 
   int _getSelectedIndex() {
     for (int i = 0; i < _navItems.length; i++) {
@@ -168,11 +154,45 @@ class _AppScaffoldState extends State<AppScaffold> {
 
   @override
   Widget build(BuildContext context) {
+    _navItems = [
+      NavigationItem(
+        title: AppLocalizations.of(context)!.dashboard,
+        icon: Icons.dashboard,
+        route: '/',
+      ),
+      NavigationItem(
+        title: AppLocalizations.of(context)!.emp_manager,
+        icon: Icons.people,
+        route: '/emp_manager',
+      ),
+      NavigationItem(
+        title: AppLocalizations.of(context)!.profile,
+        icon: Icons.person,
+        route: '/profile',
+      ),
+      NavigationItem(
+        title: AppLocalizations.of(context)!.reports,
+        icon: Icons.description,
+        route: '/reports',
+      ),
+      NavigationItem(
+        title: AppLocalizations.of(context)!.statistics,
+        icon: Icons.bar_chart,
+        route: '/stats',
+      ),
+      NavigationItem(
+        title: AppLocalizations.of(context)!.settings,
+        icon: Icons.settings,
+        route: '/settings',
+      ),
+    ];
+
     final selectedIndex = _getSelectedIndex();
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.title),
+        title:
+            MediaQuery.of(context).size.width < 600 ? Text(widget.title) : null,
         elevation: 0,
         leading: Builder(
           builder: (context) {

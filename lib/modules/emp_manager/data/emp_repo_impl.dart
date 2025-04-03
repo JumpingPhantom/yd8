@@ -2,7 +2,8 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:path_provider/path_provider.dart';
-import 'package:yd8/core/data_state.dart';
+import 'package:uuid/uuid.dart';
+import 'package:yd8/core/util/data_state.dart';
 import 'package:yd8/modules/emp_manager/data/models.dart';
 import 'package:yd8/modules/emp_manager/domain/emp_repo.dart';
 import 'package:yd8/modules/emp_manager/domain/entities.dart';
@@ -36,7 +37,25 @@ class EmpRepoImpl implements EmpRepo {
 
     Result<List<Emp>> emps = await getEmps();
 
-    emps.data!.add(EmployeeModel.create(emp.name, emp.attr));
+    emps.data!.add(
+      EmployeeModel(
+        id: emp.id ?? Uuid().v4(),
+        firstName: emp.firstName,
+        middleName: emp.middleName ?? '',
+        lastName: emp.lastName,
+        email: emp.email,
+        phone: emp.phone,
+        department: emp.department,
+        role: emp.role,
+        address: emp.address,
+        salary: emp.salary,
+        hireDate: emp.hireDate,
+        type: emp.type,
+        gender: emp.gender,
+        status: emp.status,
+        attr: emp.attr,
+      ),
+    );
 
     await file.writeAsString(jsonEncode(emps.data));
 
@@ -50,8 +69,16 @@ class EmpRepoImpl implements EmpRepo {
   }
 
   @override
-  Future<Result<void>> remEmp(Emp emp) {
-    // TODO: implement remEmp
-    throw UnimplementedError();
+  Future<Result<void>> remEmp(String empId) async {
+    Directory dir = await getApplicationSupportDirectory();
+    var file = File('${dir.path}/emps.json');
+
+    Result<List<Emp>> emps = await getEmps();
+
+    emps.data!.removeWhere((e) => e.id == empId);
+
+    await file.writeAsString(jsonEncode(emps.data));
+
+    return Ok(null);
   }
 }

@@ -7,7 +7,7 @@ class ReportsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AppScaffold(
-      title: "Reports",
+      title: 'Reports',
       body: Builder(builder: (context) => Placeholder()),
       currentRoute: '/reports',
     );

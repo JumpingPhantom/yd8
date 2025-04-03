@@ -7,7 +7,7 @@ class DashboardPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AppScaffold(
-      title: "Dashboard",
+      title: 'Dashboard',
       body: Builder(builder: (context) => Placeholder()),
       currentRoute: '/',
     );

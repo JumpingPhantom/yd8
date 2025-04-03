@@ -1,0 +1,33 @@
+{
+  "@_NAVIGATION_MENU": {},
+  "dashboard": "Dashboard",
+  "emp_manager": "Employee Manager",
+  "profile": "Profile",
+  "reports": "Reports",
+  "statistics": "Statistics",
+  "settings": "Settings",
+
+  "@_EMPLOYEE_MANAGER": {},
+  "search": "Search",
+  "empty": "such empty, much wow!",
+  "new_emp": "New Employee",
+
+  "@_EMPLOYEE_MANAGER_FORM": {},
+  "personal_info": "Personal Information",
+  "first_name": "First Name",
+  "middle_name": "Middle Name",
+  "last_name": "Last Name",
+  "contact_info": "Contact Information",
+  "email": "Email",
+  "invalid_email": "Invalid email address, please enter a valid email address.",
+  "phone": "Phone",
+  "address1": "Address Line 1",
+  "address2": "Address Line 2",
+  "employment_info": "Employment Information",
+  "department": "Department",
+  "role": "Role",
+  "salary": "Salary",
+  "hiring_date": "Hiring Date",
+  "additional_info": "Additional Information",
+  "submit": "Submit"
+}

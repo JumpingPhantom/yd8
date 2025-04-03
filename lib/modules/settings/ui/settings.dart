@@ -7,7 +7,7 @@ class SettingsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AppScaffold(
-      title: "Settings",
+      title: 'Settings',
       body: Builder(builder: (context) => Placeholder()),
       currentRoute: '/settings',
     );

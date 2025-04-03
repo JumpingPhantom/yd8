@@ -7,7 +7,7 @@ class ProfilePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AppScaffold(
-      title: "Profile",
+      title: 'Profile',
       body: Builder(builder: (context) => Placeholder()),
       currentRoute: '/profile',
     );

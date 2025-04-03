@@ -1,5 +1,5 @@
-import 'package:yd8/core/data_state.dart';
-import 'package:yd8/core/usecase.dart';
+import 'package:yd8/core/util/data_state.dart';
+import 'package:yd8/core/util/usecase.dart';
 import 'package:yd8/modules/emp_manager/domain/emp_repo.dart';
 import 'package:yd8/modules/emp_manager/domain/entities.dart';
 
