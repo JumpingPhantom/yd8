@@ -1,3 +1,3 @@
 # yd8
 
-A new Flutter project.
+something something uninteresting flutter project
