@@ -35,12 +35,12 @@ class MyApp extends StatelessWidget {
       locale: Locale('en', 'US'),
       initialRoute: '/',
       routes: {
-        '/': (context) => DashboardPage(),
-        '/emp_manager': (context) => EmpManagerPage(),
-        '/profile': (context) => ProfilePage(),
-        '/reports': (context) => ReportsPage(),
-        '/settings': (context) => SettingsPage(),
-        '/stats': (context) => StatsPage(),
+        '/': (context) => const DashboardPage(),
+        '/emp_manager': (context) => const EmpManagerPage(),
+        '/profile': (context) => const ProfilePage(),
+        '/reports': (context) => const ReportsPage(),
+        '/settings': (context) => const SettingsPage(),
+        '/stats': (context) => const StatsPage(),
       },
     );
   }

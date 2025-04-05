@@ -29,5 +29,19 @@
   "salary": "الراتب",
   "hiring_date": "تاريخ التوظيف",
   "additional_info": "معلومات إضافية",
-  "submit": "إرسال"
+  "submit": "إرسال",
+
+  "@_RADIO_GROUPS": {},
+  "gender": "الجنس",
+  "male": "ذكر",
+  "female": "أنثى",
+  "other": "آخر",
+  "type": "النوع",
+  "full_time": "دوام كامل",
+  "part_time": "دوام جزئي",
+  "status": "الحالة",
+  "active": "نشط",
+  "inactive": "غير نشط",
+  "suspended": "موقوف",
+  "terminated": "منتهية خدمته"
 }

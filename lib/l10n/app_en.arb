@@ -29,5 +29,19 @@
   "salary": "Salary",
   "hiring_date": "Hiring Date",
   "additional_info": "Additional Information",
-  "submit": "Submit"
+  "submit": "Submit",
+
+  "@_RADIO_GROUPS": {},
+  "gender": "Gender",
+  "male": "Male",
+  "female": "Female",
+  "other": "Other",
+  "type": "Type",
+  "full_time": "Full Time",
+  "part_time": "Part Time",
+  "status": "Status",
+  "active": "Active",
+  "inactive": "Inactive",
+  "suspended": "Suspended",
+  "terminated": "Terminated"
 }

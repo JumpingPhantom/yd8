@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:yd8/core/common/types.dart';
 import 'package:yd8/modules/emp_manager/domain/entities.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class GenderRadioGroup extends StatefulWidget {
   final Function(Gender?) onChanged;
@@ -16,18 +17,20 @@ class _GenderRadioGroupState extends State<GenderRadioGroup> {
 
   @override
   Widget build(BuildContext context) {
+    final locale = AppLocalizations.of(context)!;
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
         Padding(
           padding: const EdgeInsets.only(bottom: 8.0),
           child: Text(
-            'Gender',
+            locale.gender,
             style: const TextStyle(fontWeight: FontWeight.bold),
           ),
         ),
         RadioListTile<Gender>(
-          title: const Text('Male'),
+          title: Text(locale.male),
           value: Gender.male,
           groupValue: _selectedGender,
           onChanged: (Gender? value) {
@@ -38,7 +41,7 @@ class _GenderRadioGroupState extends State<GenderRadioGroup> {
           },
         ),
         RadioListTile<Gender>(
-          title: const Text('Female'),
+          title: Text(locale.female),
           value: Gender.female,
           groupValue: _selectedGender,
           onChanged: (Gender? value) {
@@ -49,7 +52,7 @@ class _GenderRadioGroupState extends State<GenderRadioGroup> {
           },
         ),
         RadioListTile<Gender>(
-          title: const Text('Other'),
+          title: Text(locale.other),
           value: Gender.other,
           groupValue: _selectedGender,
           onChanged: (Gender? value) {
@@ -79,17 +82,20 @@ class _EmploymentTypeRadioGroupState extends State<EmploymentTypeRadioGroup> {
 
   @override
   Widget build(BuildContext context) {
+    final locale = AppLocalizations.of(context)!;
+
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
         Padding(
           padding: const EdgeInsets.only(bottom: 8.0),
           child: Text(
-            'Type',
+            locale.type,
             style: const TextStyle(fontWeight: FontWeight.bold),
           ),
         ),
         RadioListTile<EmploymentType>(
-          title: const Text('Full-time'),
+          title: Text(locale.full_time),
           value: EmploymentType.fullTime,
           groupValue: _selectedType,
           onChanged: (EmploymentType? value) {
@@ -100,7 +106,7 @@ class _EmploymentTypeRadioGroupState extends State<EmploymentTypeRadioGroup> {
           },
         ),
         RadioListTile<EmploymentType>(
-          title: const Text('Part-time'),
+          title: Text(locale.part_time),
           value: EmploymentType.partTime,
           groupValue: _selectedType,
           onChanged: (EmploymentType? value) {
@@ -129,18 +135,20 @@ class _StatusRadioGroupState extends State<StatusRadioGroup> {
 
   @override
   Widget build(BuildContext context) {
+    final locale = AppLocalizations.of(context)!;
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
         Padding(
           padding: const EdgeInsets.only(bottom: 8.0),
           child: Text(
-            'Status',
+            locale.status,
             style: const TextStyle(fontWeight: FontWeight.bold),
           ),
         ),
         RadioListTile<EmpStatus>(
-          title: const Text('Active'),
+          title: Text(locale.active),
           value: EmpStatus.active,
           groupValue: _selectedStatus,
           onChanged: (EmpStatus? value) {
@@ -151,7 +159,7 @@ class _StatusRadioGroupState extends State<StatusRadioGroup> {
           },
         ),
         RadioListTile<EmpStatus>(
-          title: const Text('Inactive'),
+          title: Text(locale.inactive),
           value: EmpStatus.inactive,
           groupValue: _selectedStatus,
           onChanged: (EmpStatus? value) {
@@ -162,7 +170,7 @@ class _StatusRadioGroupState extends State<StatusRadioGroup> {
           },
         ),
         RadioListTile<EmpStatus>(
-          title: const Text('Suspended'),
+          title: Text(locale.suspended),
           value: EmpStatus.suspended,
           groupValue: _selectedStatus,
           onChanged: (EmpStatus? value) {
@@ -173,7 +181,7 @@ class _StatusRadioGroupState extends State<StatusRadioGroup> {
           },
         ),
         RadioListTile<EmpStatus>(
-          title: const Text('Terminated'),
+          title: Text(locale.terminated),
           value: EmpStatus.terminated,
           groupValue: _selectedStatus,
           onChanged: (EmpStatus? value) {

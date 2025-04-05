@@ -9,52 +9,95 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../../../core/navigation/nav.dart';
 
-class EmpManagerPage extends StatelessWidget {
+enum _AppliedFilter { search, type }
+
+class EmpManagerPage extends StatefulWidget {
   const EmpManagerPage({super.key});
 
+  @override
+  State<EmpManagerPage> createState() => _EmpManagerPageState();
+}
+
+class _EmpManagerPageState extends State<EmpManagerPage> {
+  List<Emp> emps = [];
+  Set<_AppliedFilter> filters = {};
+  String s = '';
+
   void _handleSearch(String input) {
-    // TODO: implement search
-    throw UnimplementedError();
+    filters.add(_AppliedFilter.search);
+    setState(() => s = input.toLowerCase());
+  }
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  bool _filterPredicate(Emp emp) {
+    bool res = true;
+
+    for (final filter in filters) {
+      switch (filter) {
+        case _AppliedFilter.search:
+          String fullName =
+              '${emp.firstName} ${emp.lastName} ${emp.middleName}'
+                  .trim()
+                  .toLowerCase();
+
+          res = fullName.contains(s);
+        case _AppliedFilter.type:
+          throw UnimplementedError();
+      }
+    }
+
+    return res;
   }
 
   @override
   Widget build(BuildContext context) {
+    final locale = AppLocalizations.of(context)!;
+
     return BlocProvider<EmpManagerBloc>(
       create: (context) => sl<EmpManagerBloc>(),
       child: AppScaffold(
-        title: AppLocalizations.of(context)!.emp_manager,
+        title: locale.emp_manager,
         currentRoute: '/emp_manager',
         body: Builder(
           builder: (context) {
             final empBloc = context.watch<EmpManagerBloc>();
+            final state = empBloc.state;
 
             return Scaffold(
               body: Builder(
                 builder: (context) {
-                  if (empBloc.state is EmpManagerInitial) {
+                  if (state is EmpManagerInitial) {
                     empBloc.add(GetEmps());
-                  } else if (empBloc.state is EmpManagerLoading) {
+                  } else if (state is EmpManagerLoading) {
                     return Center(child: CircularProgressIndicator());
-                  } else if (empBloc.state is EmpManagerLoaded) {
-                    List<Emp> emps = (empBloc.state as EmpManagerLoaded).emps;
+                  } else if (state is EmpManagerLoaded) {
+                    emps = state.emps;
 
                     if (emps.isEmpty) {
-                      return Center(
-                        child: Text(AppLocalizations.of(context)!.empty),
-                      );
+                      return Center(child: Text(locale.empty));
                     }
 
-                    return EmpManagerList(children: emps);
+                    return EmpManagerList(
+                      children:
+                          emps.where((emp) => _filterPredicate(emp)).toList(),
+                    );
                   }
 
                   return SizedBox.shrink();
                 },
               ),
               appBar:
-                  empBloc.state is EmpManagerLoaded
+                  state is EmpManagerLoaded
                       ? _EmpManagerAppBar(
-                        title: AppLocalizations.of(context)!.search,
+                        title: locale.search,
                         onSearch: _handleSearch,
+                        onClose: (_) {
+                          setState(() => filters.remove(_AppliedFilter.search));
+                        },
                       )
                       : null,
               floatingActionButton: FloatingActionButton(
@@ -66,7 +109,7 @@ class EmpManagerPage extends StatelessWidget {
                             child: EmpManagerForm(empBloc: empBloc),
                           ),
                     ),
-                tooltip: AppLocalizations.of(context)!.new_emp,
+                tooltip: locale.new_emp,
                 child: Icon(Icons.person_add),
               ),
             );
@@ -80,8 +123,13 @@ class EmpManagerPage extends StatelessWidget {
 class _EmpManagerAppBar extends StatefulWidget implements PreferredSizeWidget {
   final String title;
   final Function(String) onSearch;
+  final Function(void) onClose;
 
-  const _EmpManagerAppBar({required this.title, required this.onSearch});
+  const _EmpManagerAppBar({
+    required this.title,
+    required this.onSearch,
+    required this.onClose,
+  });
 
   @override
   State<_EmpManagerAppBar> createState() => _EmpManagerAppBarState();
@@ -122,6 +170,7 @@ class _EmpManagerAppBarState extends State<_EmpManagerAppBar> {
         IconButton(
           icon: Icon(_showSearchBar ? Icons.close : Icons.search),
           onPressed: () {
+            widget.onClose(null);
             setState(() {
               _showSearchBar = !_showSearchBar;
               if (!_showSearchBar) {
