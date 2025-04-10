@@ -68,15 +68,25 @@ class SettingsBloc extends Bloc<SettingsEvent, SettingsState> {
     if (state is SettingsLoaded) {
       final currentState = state as SettingsLoaded;
       emit(SettingsLoading());
-      try {
-        // Simulate saving language setting (replace with actual logic)
-        await Future.delayed(const Duration(milliseconds: 300));
-        // Example: save to shared prefs or storage
-        emit(currentState.copyWith(language: event.languageCode));
-      } catch (e) {
-        emit(SettingsError(message: 'Failed to save language setting'));
-        emit(currentState); // Re-emit previous state on error
+
+      final res = await saveSettingsUsecase(
+        SettingsImpl(
+          appTheme: currentState.appTheme,
+          language: event.languageCode,
+        ),
+      );
+
+      if (res is Err) {
+        emit(SettingsError(message: 'failed to save settings'));
+        return;
       }
+
+      emit(
+        SettingsLoaded(
+          appTheme: currentState.appTheme,
+          language: event.languageCode,
+        ),
+      );
     }
   }
 }
