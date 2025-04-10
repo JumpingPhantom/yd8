@@ -9,8 +9,11 @@
 
   "@_EMPLOYEE_MANAGER": {},
   "search": "ابحث",
-  "empty": "فاضي",
+  "empty": "فارغ",
+  "no_result": "لا يوجد شيء هنا! ربما قم بتعديل بحثك أو عوامل التصفية؟",
   "new_emp": "موظف جديد",
+  "edit": "تعديل",
+  "delete": "حذف",
 
   "@_EMPLOYEE_MANAGER_FORM": {},
   "personal_info": "معلومات شخصية",
@@ -30,6 +33,11 @@
   "hiring_date": "تاريخ التوظيف",
   "additional_info": "معلومات إضافية",
   "submit": "إرسال",
+
+  "@_EMPLOYEE_MANAGER_APPBAR": {},
+  "filters": "التصفية",
+  "clear": "مسح",
+  "apply": "تأكيد",
 
   "@_RADIO_GROUPS": {},
   "gender": "الجنس",

@@ -1,12 +1,10 @@
-import 'package:get_it/get_it.dart';
-import 'package:yd8/modules/emp_manager/data/emp_repo_impl.dart';
-import 'package:yd8/modules/emp_manager/domain/add_emp_usecase.dart';
-import 'package:yd8/modules/emp_manager/domain/emp_repo.dart';
-import 'package:yd8/modules/emp_manager/domain/get_emps_usecase.dart';
-import 'package:yd8/modules/emp_manager/domain/rem_emp_usecase.dart';
-import 'package:yd8/modules/emp_manager/ui/bloc/emp_manager_bloc.dart';
-
-final sl = GetIt.instance;
+import '../../../core/common/util.dart';
+import '../data/emp_repo_impl.dart';
+import '../domain/add_emp_usecase.dart';
+import '../domain/emp_repo.dart';
+import '../domain/get_emps_usecase.dart';
+import '../domain/rem_emp_usecase.dart';
+import '../ui/bloc/emp_manager_bloc.dart';
 
 void initEmpManagerDependencies() {
   // repos

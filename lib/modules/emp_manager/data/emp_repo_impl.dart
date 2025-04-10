@@ -3,14 +3,15 @@ import 'dart:io';
 
 import 'package:path_provider/path_provider.dart';
 import 'package:uuid/uuid.dart';
-import 'package:yd8/core/util/data_state.dart';
-import 'package:yd8/modules/emp_manager/data/models.dart';
-import 'package:yd8/modules/emp_manager/domain/emp_repo.dart';
-import 'package:yd8/modules/emp_manager/domain/entities.dart';
+
+import '../../../core/common/types.dart';
+import '../domain/emp_repo.dart';
+import '../domain/entities.dart';
+import 'models.dart';
 
 class EmpRepoImpl implements EmpRepo {
   @override
-  Future<Result<List<EmployeeModel>>> getEmps() async {
+  Future<Result<List<Emp>>> getEmps() async {
     Directory dir = await getApplicationSupportDirectory();
     var file = File('${dir.path}/emps.json');
 
@@ -22,9 +23,9 @@ class EmpRepoImpl implements EmpRepo {
 
     List<dynamic> json = jsonDecode(await file.readAsString());
 
-    List<EmployeeModel> data =
+    List<EmpModel> data =
         json
-            .map((item) => EmployeeModel.fromJson(item as Map<String, dynamic>))
+            .map((item) => EmpModel.fromJson(item as Map<String, dynamic>))
             .toList();
 
     return Ok(data);
@@ -38,7 +39,7 @@ class EmpRepoImpl implements EmpRepo {
     Result<List<Emp>> emps = await getEmps();
 
     emps.data!.add(
-      EmployeeModel(
+      EmpModel(
         id: emp.id ?? Uuid().v4(),
         firstName: emp.firstName,
         middleName: emp.middleName ?? '',

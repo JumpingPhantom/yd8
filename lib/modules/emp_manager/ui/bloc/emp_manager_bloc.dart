@@ -1,64 +1,10 @@
-import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:yd8/core/util/data_state.dart';
-import 'package:yd8/modules/emp_manager/domain/add_emp_usecase.dart';
-import 'package:yd8/modules/emp_manager/domain/entities.dart';
-import 'package:yd8/modules/emp_manager/domain/get_emps_usecase.dart';
-import 'package:yd8/modules/emp_manager/domain/rem_emp_usecase.dart';
-
-// events
-abstract class EmpManagerEvent extends Equatable {
-  const EmpManagerEvent();
-
-  @override
-  List<Object?> get props => [];
-}
-
-class GetEmps extends EmpManagerEvent {}
-
-class AddEmp extends EmpManagerEvent {
-  final Emp emp;
-
-  const AddEmp({required this.emp});
-}
-
-class RemEmp extends EmpManagerEvent {
-  final String id;
-
-  const RemEmp({required this.id});
-}
-
-class EditEmp extends EmpManagerEvent {}
-
-// states
-abstract class EmpManagerState extends Equatable {
-  const EmpManagerState();
-
-  @override
-  List<Object> get props => [];
-}
-
-class EmpManagerInitial extends EmpManagerState {}
-
-class EmpManagerLoading extends EmpManagerState {}
-
-class EmpManagerLoaded extends EmpManagerState {
-  final List<Emp> emps;
-
-  const EmpManagerLoaded(this.emps);
-
-  @override
-  List<Object> get props => [emps];
-}
-
-class EmpManagerError extends EmpManagerState {
-  final String message;
-
-  const EmpManagerError(this.message);
-
-  @override
-  List<Object> get props => [message];
-}
+import '../../../../core/common/types.dart';
+import '../../domain/add_emp_usecase.dart';
+import '../../domain/get_emps_usecase.dart';
+import '../../domain/rem_emp_usecase.dart';
+import 'emp_manager.event.dart';
+import 'emp_manager_state.dart';
 
 class EmpManagerBloc extends Bloc<EmpManagerEvent, EmpManagerState> {
   final GetEmpsUsecase _getEmployeesUsecase;

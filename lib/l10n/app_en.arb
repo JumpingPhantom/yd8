@@ -9,8 +9,11 @@
 
   "@_EMPLOYEE_MANAGER": {},
   "search": "Search",
-  "empty": "such empty, much wow!",
+  "empty": "Such empty, much wow!",
+  "no_result": "Hmm, nothing here! Maybe adjust your search or filters?",
   "new_emp": "New Employee",
+  "edit": "Edit",
+  "delete": "Delete",
 
   "@_EMPLOYEE_MANAGER_FORM": {},
   "personal_info": "Personal Information",
@@ -30,6 +33,11 @@
   "hiring_date": "Hiring Date",
   "additional_info": "Additional Information",
   "submit": "Submit",
+
+  "@_EMPLOYEE_MANAGER_APPBAR": {},
+  "filters": "Filters",
+  "clear": "Clear",
+  "apply": "Apply",
 
   "@_RADIO_GROUPS": {},
   "gender": "Gender",

@@ -1,8 +1,6 @@
 import 'package:equatable/equatable.dart';
 
-enum EmploymentType { fullTime, partTime }
-
-enum EmpStatus { active, terminated, suspended, inactive }
+import 'types.dart';
 
 abstract class Emp extends Equatable {
   final String? id;

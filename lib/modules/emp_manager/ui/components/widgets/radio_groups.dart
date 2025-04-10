@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:yd8/core/common/types.dart';
-import 'package:yd8/modules/emp_manager/domain/entities.dart';
+import '../../../../../core/common/types.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
+import '../../../domain/types.dart';
 
 class GenderRadioGroup extends StatefulWidget {
   final Function(Gender?) onChanged;
