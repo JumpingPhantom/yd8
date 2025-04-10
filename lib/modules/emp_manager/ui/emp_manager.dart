@@ -1,136 +1,155 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:yd8/modules/emp_manager/di/emp_manager_di.dart';
-import 'package:yd8/modules/emp_manager/domain/entities.dart';
-import 'package:yd8/modules/emp_manager/ui/bloc/emp_manager_bloc.dart';
-import 'package:yd8/modules/emp_manager/ui/components/emp_manager_form.dart';
-import 'package:yd8/modules/emp_manager/ui/components/emp_manager_list.dart';
+import '../domain/entities.dart';
+import 'bloc/emp_manager.event.dart';
+import 'bloc/emp_manager_state.dart';
+import 'components/emp_manager_app_bar.dart';
+import 'bloc/emp_manager_bloc.dart';
+import 'components/emp_manager_form.dart';
+import 'components/emp_manager_list.dart';
+
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
+import '../../../core/common/util.dart';
 import '../../../core/navigation/nav.dart';
+import '../domain/types.dart';
 
-class EmpManagerPage extends StatelessWidget {
+enum Filter { search, type, status, gender, department }
+
+class EmpManagerPage extends StatefulWidget {
   const EmpManagerPage({super.key});
 
+  @override
+  State<EmpManagerPage> createState() => _EmpManagerPageState();
+}
+
+class _EmpManagerPageState extends State<EmpManagerPage> {
+  List<Emp> emps = [];
+
+  Set<Filter> filters = {};
+  Set<EmpStatus> selectedStatus = {};
+
+  String searchQuery = '';
+
   void _handleSearch(String input) {
-    // TODO: implement search
-    throw UnimplementedError();
+    filters.add(Filter.search);
+    setState(() => searchQuery = input.toLowerCase());
+  }
+
+  void _handleTypeFilter(Set<EmpStatus> selected) {
+    filters.add(Filter.type);
+    setState(() => selectedStatus = selected);
+  }
+
+  bool _filterPredicate(Emp emp) {
+    if (filters.isEmpty) {
+      return true;
+    }
+
+    for (final filter in filters) {
+      bool matchesFilter = false;
+      switch (filter) {
+        case Filter.search:
+          final String fullName =
+              '${emp.firstName} ${emp.lastName} ${emp.middleName}'
+                  .trim()
+                  .toLowerCase();
+          matchesFilter = fullName.contains(searchQuery);
+          break;
+        case Filter.type:
+          if (selectedStatus.isEmpty) {
+            matchesFilter = true;
+            break;
+          }
+
+          matchesFilter = selectedStatus.contains(emp.status);
+          break;
+        case Filter.status:
+          // TODO: Handle this case.
+          throw UnimplementedError('Type filter not yet implemented.');
+        case Filter.gender:
+          // TODO: Handle this case.
+          throw UnimplementedError('Type filter not yet implemented.');
+        case Filter.department:
+          // TODO: Handle this case.
+          throw UnimplementedError('Type filter not yet implemented.');
+      }
+
+      if (!matchesFilter) {
+        return false;
+      }
+    }
+
+    return true;
   }
 
   @override
   Widget build(BuildContext context) {
+    final locale = AppLocalizations.of(context)!;
+
     return BlocProvider<EmpManagerBloc>(
-      create: (context) => sl<EmpManagerBloc>(),
+      create: (_) => sl(),
       child: AppScaffold(
-        title: AppLocalizations.of(context)!.emp_manager,
+        title: locale.emp_manager,
         currentRoute: '/emp_manager',
-        body: Builder(
-          builder: (context) {
-            final empBloc = context.watch<EmpManagerBloc>();
+        body: BlocBuilder<EmpManagerBloc, EmpManagerState>(
+          builder: (context, state) {
+            final bloc = context.read<EmpManagerBloc>();
 
             return Scaffold(
+              appBar:
+                  state is EmpManagerLoaded
+                      ? EmpManagerAppBar(
+                        title: locale.search,
+                        onSearch: _handleSearch,
+                        onFilterType: _handleTypeFilter,
+                        onClearSearch: () {
+                          setState(() => filters.remove(Filter.search));
+                        },
+                        onClearFilters: () {
+                          setState(() {
+                            selectedStatus = {};
+                          });
+                        },
+                      )
+                      : null,
               body: Builder(
-                builder: (context) {
-                  if (empBloc.state is EmpManagerInitial) {
-                    empBloc.add(GetEmps());
-                  } else if (empBloc.state is EmpManagerLoading) {
+                builder: (_) {
+                  if (state is EmpManagerInitial) {
+                    bloc.add(GetEmps());
+                  } else if (state is EmpManagerLoading) {
                     return Center(child: CircularProgressIndicator());
-                  } else if (empBloc.state is EmpManagerLoaded) {
-                    List<Emp> emps = (empBloc.state as EmpManagerLoaded).emps;
+                  } else if (state is EmpManagerLoaded) {
+                    emps = state.emps;
 
                     if (emps.isEmpty) {
-                      return Center(
-                        child: Text(AppLocalizations.of(context)!.empty),
-                      );
+                      return Center(child: Text(locale.empty));
                     }
 
-                    return EmpManagerList(children: emps);
+                    return EmpManagerList(
+                      emps: emps.where((emp) => _filterPredicate(emp)).toList(),
+                    );
                   }
 
                   return SizedBox.shrink();
                 },
               ),
-              appBar:
-                  empBloc.state is EmpManagerLoaded
-                      ? _EmpManagerAppBar(
-                        title: AppLocalizations.of(context)!.search,
-                        onSearch: _handleSearch,
-                      )
-                      : null,
               floatingActionButton: FloatingActionButton(
                 onPressed:
                     () => showDialog(
                       context: context,
                       builder:
-                          (context) => Dialog.fullscreen(
-                            child: EmpManagerForm(empBloc: empBloc),
+                          (_) => Dialog.fullscreen(
+                            child: EmpManagerForm(empBloc: bloc),
                           ),
                     ),
-                tooltip: AppLocalizations.of(context)!.new_emp,
+                tooltip: locale.new_emp,
                 child: Icon(Icons.person_add),
               ),
             );
           },
         ),
       ),
-    );
-  }
-}
-
-class _EmpManagerAppBar extends StatefulWidget implements PreferredSizeWidget {
-  final String title;
-  final Function(String) onSearch;
-
-  const _EmpManagerAppBar({required this.title, required this.onSearch});
-
-  @override
-  State<_EmpManagerAppBar> createState() => _EmpManagerAppBarState();
-
-  @override
-  Size get preferredSize => const Size.fromHeight(kToolbarHeight);
-}
-
-class _EmpManagerAppBarState extends State<_EmpManagerAppBar> {
-  bool _showSearchBar = false;
-  final TextEditingController _searchController = TextEditingController();
-
-  @override
-  void dispose() {
-    _searchController.dispose();
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return AppBar(
-      title:
-          _showSearchBar
-              ? TextField(
-                controller: _searchController,
-                decoration: InputDecoration(
-                  border: InputBorder.none,
-                  hintStyle: TextStyle(color: Colors.white70),
-                ),
-                autofocus: true,
-                onChanged: (value) {
-                  widget.onSearch(value);
-                },
-              )
-              : Text(widget.title),
-      actionsPadding: EdgeInsets.symmetric(horizontal: 8),
-      actions: [
-        IconButton(
-          icon: Icon(_showSearchBar ? Icons.close : Icons.search),
-          onPressed: () {
-            setState(() {
-              _showSearchBar = !_showSearchBar;
-              if (!_showSearchBar) {
-                _searchController.clear();
-              }
-            });
-          },
-        ),
-      ],
     );
   }
 }

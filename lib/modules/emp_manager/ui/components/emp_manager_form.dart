@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:yd8/core/common/types.dart';
-import 'package:yd8/modules/emp_manager/domain/entities.dart';
-import 'package:yd8/modules/emp_manager/ui/bloc/emp_manager_bloc.dart';
-import 'package:yd8/modules/emp_manager/ui/components/widgets/custom_form_text_field.dart';
-import 'package:yd8/modules/emp_manager/ui/components/widgets/form_block.dart';
-import 'package:yd8/modules/emp_manager/ui/components/widgets/radio_groups.dart';
-import 'package:yd8/modules/emp_manager/ui/components/widgets/key_value_form.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import '../../../../core/common/types.dart';
+import '../../domain/entities.dart';
+import '../bloc/emp_manager.event.dart';
+import '../bloc/emp_manager_bloc.dart';
+import 'widgets/custom_form_text_field.dart';
+import 'widgets/form_block.dart';
+import 'widgets/key_value_form.dart';
+import 'widgets/radio_groups.dart';
+
+import '../../domain/types.dart';
 
 class EmpManagerForm extends StatefulWidget {
   final EmpManagerBloc empBloc;

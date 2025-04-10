@@ -37,15 +37,13 @@ class SidebarNavigation extends StatelessWidget {
   Widget build(BuildContext context) {
     return SizedBox(
       width: width,
-      // color: backgroundColor ?? Theme.of(context).colorScheme.surface,
       child: Column(
         children: [
           const SizedBox(height: 20),
-          // Add your logo or brand here
           Padding(
             padding: const EdgeInsets.all(16.0),
             child: Text(
-              'My App',
+              'yd8',
               style: Theme.of(context).textTheme.headlineSmall,
             ),
           ),
@@ -193,7 +191,7 @@ class _AppScaffoldState extends State<AppScaffold> {
       appBar: AppBar(
         title:
             MediaQuery.of(context).size.width < 600 ? Text(widget.title) : null,
-        elevation: 0,
+        forceMaterialTransparency: true,
         leading: Builder(
           builder: (context) {
             return MediaQuery.of(context).size.width < 600

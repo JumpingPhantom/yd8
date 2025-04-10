@@ -1,7 +1,9 @@
-import 'package:yd8/modules/emp_manager/domain/entities.dart';
+import '../domain/entities.dart';
 
-class EmployeeModel extends Emp {
-  const EmployeeModel({
+import '../domain/types.dart';
+
+class EmpModel extends Emp {
+  const EmpModel({
     required super.id,
     required super.firstName,
     required super.middleName,
@@ -39,8 +41,8 @@ class EmployeeModel extends Emp {
     };
   }
 
-  factory EmployeeModel.fromJson(Map<String, dynamic> json) {
-    return EmployeeModel(
+  factory EmpModel.fromJson(Map<String, dynamic> json) {
+    return EmpModel(
       id: json['id'] as String?,
       firstName: json['firstName'] as String,
       middleName: json['middleName'] as String?,

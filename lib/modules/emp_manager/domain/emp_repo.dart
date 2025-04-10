@@ -1,5 +1,5 @@
-import 'package:yd8/core/util/data_state.dart';
-import 'package:yd8/modules/emp_manager/domain/entities.dart';
+import '../../../core/common/types.dart';
+import 'entities.dart';
 
 abstract class EmpRepo {
   Future<Result<List<Emp>>> getEmps();
