@@ -51,7 +51,7 @@ class _MyAppState extends State<MyApp> {
     super.initState();
     final config = jsonDecode(widget.config);
     locale = stringToLocale(config['language'] as String);
-    themeMode = stringToThemeMode(config['theme'] as String);
+    themeMode = stringToThemeMode(config['appTheme'] as String);
   }
 
   @override

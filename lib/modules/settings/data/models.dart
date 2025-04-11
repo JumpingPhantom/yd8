@@ -7,14 +7,14 @@ class SettingsModel extends Settings {
   factory SettingsModel.fromJson(Map<String, dynamic> json) {
     return SettingsModel(
       appTheme: AppTheme.values.firstWhere(
-        (theme) => theme.name == json['theme'],
+        (theme) => theme.name == json['appTheme'],
       ),
       language: json['language'],
     );
   }
 
   Map<String, dynamic> toJson() {
-    return {'theme': appTheme.name, 'language': language};
+    return {'appTheme': appTheme.name, 'language': language};
   }
 
   @override
