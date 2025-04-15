@@ -164,16 +164,6 @@ class _AppScaffoldState extends State<AppScaffold> {
         route: '/emp_manager',
       ),
       NavigationItem(
-        title: AppLocalizations.of(context)!.profile,
-        icon: Icons.person,
-        route: '/profile',
-      ),
-      NavigationItem(
-        title: AppLocalizations.of(context)!.reports,
-        icon: Icons.description,
-        route: '/reports',
-      ),
-      NavigationItem(
         title: AppLocalizations.of(context)!.statistics,
         icon: Icons.bar_chart,
         route: '/stats',
