@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_print
+
 import 'dart:io';
 
 import 'package:flutter/material.dart';
@@ -37,27 +39,17 @@ Future<String> loadSettings() async {
 /// Returns a default Locale (e.g., 'en') if the format is invalid or empty.
 Locale stringToLocale(String langCountry) {
   if (langCountry.isEmpty) {
-    print(
-      'Warning: Empty langCountry string provided. Using default locale "en".',
-    );
     return const Locale('en');
   }
 
   if (langCountry.contains('-')) {
     final parts = langCountry.split('-');
-    // Check for a valid split like "en-US"
     if (parts.length == 2 && parts[0].isNotEmpty && parts[1].isNotEmpty) {
       return Locale(parts[0], parts[1]);
     } else {
-      // Handle invalid formats like "en-", "-US", "en-US-extra"
-      print(
-        'Warning: Invalid langCountry format "$langCountry". Attempting to use first part or default "en".',
-      );
-      // Use the first part if it's not empty, otherwise default to 'en'
       return Locale(parts[0].isNotEmpty ? parts[0] : 'en');
     }
   } else {
-    // Assume the whole string is the language code if no hyphen
     return Locale(langCountry);
   }
 }
