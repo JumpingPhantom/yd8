@@ -8,8 +8,6 @@ import 'core/common/util.dart';
 import 'modules/dashboard/ui/dashboard.dart';
 import 'modules/emp_manager/di/emp_manager_di.dart';
 import 'modules/emp_manager/ui/emp_manager.dart';
-import 'modules/profile/ui/profile.dart';
-import 'modules/reports/ui/reports.dart';
 import 'modules/settings/di/settings_di.dart';
 import 'modules/settings/ui/settings.dart';
 import 'modules/stats/ui/stats.dart';
@@ -59,9 +57,6 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp(
       title: 'yd8',
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.orange),
-      ),
       localizationsDelegates: [
         AppLocalizations.delegate,
         GlobalMaterialLocalizations.delegate,
@@ -70,20 +65,29 @@ class _MyAppState extends State<MyApp> {
       ],
       supportedLocales: [Locale('en', 'US'), Locale('ar', 'SA')],
       locale: locale,
-      darkTheme: ThemeData.dark(useMaterial3: true),
+      theme: ThemeData(
+        colorScheme: ColorScheme.fromSeed(
+          seedColor: Colors.orange,
+          brightness: Brightness.light,
+        ),
+      ),
+      darkTheme: ThemeData(
+        colorScheme: ColorScheme.fromSeed(
+          seedColor: Colors.orange,
+          brightness: Brightness.dark,
+        ),
+      ),
       themeMode: themeMode,
       initialRoute: '/',
       routes: {
         '/': (context) => const DashboardPage(),
         '/emp_manager': (context) => const EmpManagerPage(),
-        '/profile': (context) => const ProfilePage(),
-        '/reports': (context) => const ReportsPage(),
+        '/stats': (context) => const StatsPage(),
         '/settings':
             (context) => SettingsPage(
               onLocaleChanged: onLocaleChanged,
               onThemeModeChanged: onThemeModeChanged,
             ),
-        '/stats': (context) => const StatsPage(),
       },
     );
   }
